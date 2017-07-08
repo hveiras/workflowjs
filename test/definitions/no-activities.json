@@ -1,0 +1,15 @@
+{
+  "name": "no-activities",
+  "type": "program",
+  "parameters": {
+    "param1": {
+      "required": true,
+      "type": "string"
+    },
+    "param2": {
+      "required": false,
+      "type": "array"
+    }
+  },
+  "activities": []
+}

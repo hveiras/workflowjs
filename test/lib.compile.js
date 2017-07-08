@@ -1,13 +1,25 @@
 'use strict';
 
 const compile = require('../lib/compile');
+const expect = require('chai').expect;
+const getDefinition = require('./definitions/getDefinition');
 
-describe('Program', () => {
+describe('Compile', () => {
+  it('should fail to compile program with no activities', () => {
+    const def = getDefinition('no-activities.json');
+    expect(() => compile(def)).to.throw(Error, 'Program must have at least one activity');
+  });
+
+  it.only('should compile program with script activity', () => {
+    const def = getDefinition('simple-script-activity.json');
+    console.log(compile(def));
+  });
+
   it('should compile program activity', () => {
     const definition = {
       "name": "addOrUpdateCustomer",
       "type": "program",
-      "params": {
+      "parameters": {
         "firstName": {
           "required": true,
           "type": "string"
