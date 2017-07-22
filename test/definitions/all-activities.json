@@ -1,0 +1,88 @@
+{
+  "type": "program",
+  "name": "all-activities",
+  "version": "1.0",
+  "parameters": {
+    "param1": {
+      "required": true,
+      "type": "string"
+    },
+    "param2": {
+      "required": true,
+      "type": "string"
+    }
+  },
+  "root": {
+    "type": "waterfall",
+    "activities": [
+      {
+        "type": "script",
+        "name": "concat-params",
+        "input": {
+          "param1": "@parameters('param1')",
+          "param2": "@parameters('param2')",
+          "param3": "a value"
+        },
+        "output": "(context) => {\r\nreturn context.input.param1 + \" \" + context.input.param2;\r\n}"
+      },
+      {
+        "type": "script",
+        "name": "split-params",
+        "input": {
+          "param1": "@activities('concat-params').output"
+        },
+        "output": "(context) => {\r\nreturn context.input.param1.split(' ');\r\n}"
+      },
+      {
+        "type": "scatterGather",
+        "name": "requests",
+        "scatter": {
+          "type": "each",
+          "input": "@activities('split-params').output",
+          "activity": {
+            "type": "httpRequest",
+            "url": "@item"
+          }
+        },
+        "gather": {
+          "type": "array",
+          "wait": "all"
+        }
+      },
+      {
+        "type": "switch",
+        "input": "@activities('requests').output",
+        "exp": "$input.length",
+        "activities": [
+          {
+            "type": "waterfall",
+            "cond": "$exp === 0",
+            "activities": [
+              {
+                "type": "log",
+                "to": "console",
+                "output": "Empty!"
+              },
+              {
+                "type": "log",
+                "to": "console",
+                "output": "Nothing else to do!"
+              }
+            ]
+          },
+          {
+            "type": "waterfall",
+            "cond": "$exp > 0",
+            "activities": [
+              {
+                "type": "log",
+                "to": "console",
+                "output": "Not Empty!"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

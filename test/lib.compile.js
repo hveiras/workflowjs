@@ -10,13 +10,13 @@ describe('Compile', () => {
     expect(() => compile(def)).to.throw(Error, 'Program must have at least one activity');
   });
 
-  it('should compile single script activity', () => {
-    const def = getDefinition('single-script-activity.json');
+  it.only('should compile single activity', () => {
+    const def = getDefinition('single-activity.json');
     console.log(compile(def));
   });
 
-  it.only('should compile sequence script activity', () => {
-    const def = getDefinition('sequence-script-activity.json');
+  it('should compile all activities', () => {
+    const def = getDefinition('all-activities.json');
     console.log(compile(def));
   });
 });

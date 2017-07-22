@@ -1,5 +1,5 @@
 {
-  "name": "no-activities",
+  "name": "sequence-script-activity",
   "type": "program",
   "parameters": {
     "param1": {
@@ -11,22 +11,30 @@
       "type": "string"
     }
   },
-  "activities": [{
-    "name": "concatParams",
-    "type": "script",
-    "parameters": {
-      "param1": "@parameters('param1')",
-      "param2": "@parameters('param2')",
-      "param3": "a value"
-    },
-    "code": "(context) => {\r\nreturn context.parameters.param1 + \" \" + context.parameters.param2;\r\n}"
-  },
-  {
-    "name": "splitParams",
-    "type": "script",
-    "parameters": {
-      "input": "@activities('concatParams').output" 
-    },
-    "code": "(context) => {\r\nreturn context.parameters.input.split('-');\r\n}"
-  }]
+  "activities": [
+    {
+      "name": "sequence1",
+      "type": "waterfall",
+      "activities": [
+        {
+          "name": "concatParams",
+          "type": "script",
+          "parameters": {
+            "param1": "@parameters('param1')",
+            "param2": "@parameters('param2')",
+            "param3": "a value"
+          },
+          "code": "(context) => {\r\nreturn context.parameters.param1 + \" \" + context.parameters.param2;\r\n}"
+        },
+        {
+          "name": "splitParams",
+          "type": "script",
+          "parameters": {
+            "input": "@activities('concatParams').output"
+          },
+          "code": "(context) => {\r\nreturn context.parameters.input.split('-');\r\n}"
+        }
+      ]
+    }
+  ]
 }

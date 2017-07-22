@@ -1,0 +1,30 @@
+{
+  "type": "program",
+  "name": "single-activity",
+  "version": "1.0",
+  "parameters": {
+    "param1": {
+      "required": true,
+      "type": "string"
+    },
+    "param2": {
+      "required": true,
+      "type": "string"
+    }
+  },
+  "root": {
+    "type": "waterfall",
+    "activities": [
+       {
+        "type": "script",
+        "name": "concat-params",
+        "input": {
+          "param1": "@parameters('param1')",
+          "param2": "@parameters('param2')",
+          "param3": "a value"
+        },
+        "output": "(context) => {\r\nreturn context.input.param1 + \" \" + context.input.param2;\r\n}"
+      }
+    ]
+  }
+}
