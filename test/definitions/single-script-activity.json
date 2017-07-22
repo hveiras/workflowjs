@@ -1,0 +1,24 @@
+{
+  "name": "no-activities",
+  "type": "program",
+  "parameters": {
+    "param1": {
+      "required": true,
+      "type": "string"
+    },
+    "param2": {
+      "required": true,
+      "type": "string"
+    }
+  },
+  "activities": [{
+    "name": "concatParams",
+    "type": "script",
+    "parameters": {
+      "param1": "@parameters('param1')",
+      "param2": "@parameters('param2')",
+      "param3": "a value"
+    },
+    "code": "(context) => {\r\nreturn context.parameters.param1 + \" \" + context.parameters.param2;\r\n}"
+  }]
+}
