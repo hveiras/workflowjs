@@ -15,7 +15,6 @@
   "author": " <hveiras hernan.veiras@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async": "^2.5.0",
     "babel-generator": "^6.24.1",
     "babel-template": "^6.24.1",
     "babel-types": "^6.24.1",
