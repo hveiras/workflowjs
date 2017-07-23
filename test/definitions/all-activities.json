@@ -20,8 +20,7 @@
         "name": "concat-params",
         "input": {
           "param1": "@parameters('param1')",
-          "param2": "@parameters('param2')",
-          "param3": "a value"
+          "param2": "@parameters('param2')"
         },
         "output": "(context) => {\r\nreturn context.input.param1 + \" \" + context.input.param2;\r\n}"
       },
@@ -29,9 +28,9 @@
         "type": "script",
         "name": "split-params",
         "input": {
-          "param1": "@activities('concat-params').output"
+          "foo": "bar"
         },
-        "output": "(context) => {\r\nreturn context.input.param1.split(' ');\r\n}"
+        "output": "(context) => {\r\nreturn context.output['concat-params'].split(' ');\r\n}"
       },
       {
         "type": "scatterGather",
